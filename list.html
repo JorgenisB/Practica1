@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+      <ul>
+        <li v-for="lenguaje in lenguajes"><a :href="lenguaje.link">{{lenguaje.nombre}}</a>: {{lenguaje.puntos}}
+            <button @click="lenguaje.puntos++">+</button>
+            <button @click="lenguaje.puntos--">-</button>
+        
+        </li>
+       
+      </ul>
+      <p>Suma de todos los votos: {{sumarTodo}}</p>
+
+      <input type="text" v-model="nuevolenguaje" @keyup.enter="agregarLenguaje">
+      <input type="text" v-model="nuevolink"  @keyup.enter="agregarLenguaje">
+      <input type="text" v-model.number="punto"  @keyup.enter="agregarLenguaje">
+      <button @click="agregarLenguaje">Agregar</button>
+      
+      
+    </div>
+</body>
+
+<script>
+   var app =  new Vue({
+        el:"#app",
+
+        data:{
+            lenguajes:[
+                {nombre:"PHP",link:"https://www.php.net/manual/es/index.php",puntos:0},
+                {nombre:"PHP",link:"https://www.php.net/manual/es/index.php",puntos:0},
+                {nombre:"PHP",link:"https://www.php.net/manual/es/index.php",puntos:10}
+            ],
+            nuevolenguaje:'',
+            nuevolink:'',
+            punto:0,
+            total:0
+           
+        },
+
+        methods: {
+            agregarLenguaje(){
+                this.lenguajes.push({nombre:this.nuevolenguaje,link:this.nuevolink,puntos:this.punto})
+                this.nuevolenguaje="";
+                this.nuevolink="";
+                this.punto=0;
+            }
+        },
+        computed: {
+            sumarTodo(){
+                this.total=0;
+                for(lenguaje of this.lenguajes){
+                    this.total=this.total+lenguaje.puntos;
+                }
+                return this.total;
+            }
+        },
+
+    });
+
+   
+</script>
+</html>
